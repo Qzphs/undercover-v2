@@ -1,0 +1,24 @@
+# This is a test file.
+
+# Files should usually have blank lines at the beginning.
+
+
+
+
+
+
+
+
+
+
+
+
+# These pairs are invalid and will be ignored.
+dog, cat, umbrella
+programming is fun!
+
+# This pair is valid.
+bell, salmon
+
+# This pair is valid, and it has whitespace which will be ignored.
+    angry, red face     

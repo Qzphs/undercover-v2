@@ -1,0 +1,2 @@
+horse, donkey
+angry, red face
