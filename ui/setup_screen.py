@@ -17,22 +17,22 @@ class SetupScreen(s.Screen):
         self.setup = Setup()
 
         self.player_entries = [s.Entry(self) for _ in range(PLAYER_LIMIT)]
-        for i, entry in enumerate(self.player_entries):
+        for entry in self.player_entries:
             entry.width = 12
-            entry.on_write = self.on_entry_write
+            entry.on_write = self._on_entry_write
 
         self.delete_buttons = [s.TextLabel(self, "(-)") for _ in range(PLAYER_LIMIT)]
-        for i, button in enumerate(self.delete_buttons):
-            button.on_click = self.remove_player
+        for button in self.delete_buttons:
+            button.on_click = self._remove_player
 
         self.add_button = s.TextLabel(self, "(add player)")
-        self.add_button.on_click = self.add_player
+        self.add_button.on_click = self._add_player
         self.add_button.place(x=50, y=550, anchor=s.SW)
 
         self.file_label = s.TextLabel(self, "use file:")
         self.file_label.place(OPTIONS_X, 50)
         self.file_dropdown = s.Dropdown(self, [file.name for file in FILES])
-        self.file_dropdown.on_write = self.on_dropdown_write
+        self.file_dropdown.on_write = self._on_dropdown_write
         self.file_dropdown.place(OPTIONS_X, 80)
 
         self.n_words_label = s.TextLabel(self, f"{self.setup.file.n_pairs} set(s) left")
@@ -51,24 +51,24 @@ class SetupScreen(s.Screen):
 
         self._update_player_widgets()
 
-    def add_player(self, source: s.TextLabel):
+    def _add_player(self, source: s.TextLabel):
         self.setup.players.append("")
         self._update_player_widgets()
         self._update_start_button()
 
-    def remove_player(self, source: s.TextLabel):
+    def _remove_player(self, source: s.TextLabel):
         index = self.delete_buttons.index(source)
         self.setup.players.pop(index)
         self._update_player_widgets()
         self._update_start_button()
 
-    def on_dropdown_write(self, source: s.Dropdown):
+    def _on_dropdown_write(self, source: s.Dropdown):
         file = next(file for file in FILES if file.name == source.value)
         self.setup.file = file
         self.n_words_label.text = f"{self.setup.file.n_pairs} set(s) left"
         self._update_start_button()
 
-    def on_entry_write(self, source: s.Entry):
+    def _on_entry_write(self, source: s.Entry):
         index = self.player_entries.index(source)
         if index >= len(self.setup.players):
             return

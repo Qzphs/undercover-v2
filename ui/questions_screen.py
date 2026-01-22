@@ -19,7 +19,7 @@ class QuestionsScreen(s.Screen):
         self.player_labels = [s.TextLabel(self, "") for _ in range(PLAYER_LIMIT)]
 
         self.reroll_button = s.TextLabel(self, "(reroll question order)")
-        self.reroll_button.on_click = self.reroll_question_order
+        self.reroll_button.on_click = self._reroll_question_order
         self.reroll_button.place(50, 550, anchor=s.SW)
 
         self.notepad = Notepad(self)
@@ -29,7 +29,7 @@ class QuestionsScreen(s.Screen):
         self.navigation.questions_button.font = s.Font("Sans Serif", 12, bold=True)
         self.navigation.place(910, 50, anchor=s.NE)
 
-    def reroll_question_order(self, source: s.TextLabel):
+    def _reroll_question_order(self, source: s.TextLabel):
         self.update()
 
     def update(self):
