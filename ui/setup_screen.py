@@ -65,7 +65,7 @@ class SetupScreen(s.Screen):
     def _on_dropdown_write(self, source: s.Dropdown):
         file = next(file for file in FILES if file.name == source.value)
         self.setup.file = file
-        self.n_words_label.text = f"{self.setup.file.n_pairs} set(s) left"
+        self.update_n_words_label()
         self._update_start_button()
 
     def _on_entry_write(self, source: s.Entry):
@@ -103,3 +103,6 @@ class SetupScreen(s.Screen):
             self.start_button.place(OPTIONS_X, 550, anchor=s.SW)
         else:
             self.start_button.place(s.OFFSCREEN, 550)
+
+    def update_n_words_label(self):
+        self.n_words_label.text = f"{self.setup.file.n_pairs} set(s) left"

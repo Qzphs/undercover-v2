@@ -50,6 +50,7 @@ class Application(s.Application):
     def _go_to_setup(self, source: s.TextLabel):
         if not self.game.players:
             return
+        self.setup_screen.update_n_words_label()
         self.change_screen(self.setup_screen)
 
     def _go_to_words(self, source: s.TextLabel):
