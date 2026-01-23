@@ -32,7 +32,7 @@ class QuestionsScreen(s.Screen):
         self.reroll_button.place(50, 550, anchor=s.SW)
 
         self.notepad = Notepad(self)
-        self.notepad.place(760, 50, anchor=s.NE)
+        self.notepad.place(PLAYER_X + 175, PLAYER_Y)
 
         self.navigation = Navigation(self)
         # TODO: copy previous font using future sprout version
