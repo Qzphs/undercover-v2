@@ -3,7 +3,13 @@ from game.setup import Setup
 
 import sprout as s
 
-from ui.constants import PLAYER_LIMIT, PLAYER_SPACING, PLAYER_X, PLAYER_Y
+from ui.constants import (
+    DEFAULT_FONT,
+    PLAYER_LIMIT,
+    PLAYER_SPACING,
+    PLAYER_X,
+    PLAYER_Y,
+)
 from ui.navigation import Navigation
 
 
@@ -18,20 +24,25 @@ class SetupScreen(s.Screen):
 
         self.player_entries = [s.Entry(self) for _ in range(PLAYER_LIMIT)]
         for entry in self.player_entries:
+            entry.font = DEFAULT_FONT
             entry.width = 12
             entry.on_write = self._on_entry_write
 
         self.delete_buttons = [s.TextLabel(self, "(-)") for _ in range(PLAYER_LIMIT)]
         for button in self.delete_buttons:
+            button.font = DEFAULT_FONT
             button.on_click = self._remove_player
 
         self.add_button = s.TextLabel(self, "(add player)")
+        self.add_button.font = DEFAULT_FONT
         self.add_button.on_click = self._add_player
         self.add_button.place(x=50, y=550, anchor=s.SW)
 
         self.file_label = s.TextLabel(self, "use file:")
+        self.file_label.font = DEFAULT_FONT
         self.file_label.place(OPTIONS_X, 50)
         self.file_dropdown = s.Dropdown(self, [file.name for file in FILES])
+        # TODO: set dropdown font using future sprout version
         self.file_dropdown.on_write = self._on_dropdown_write
         self.file_dropdown.place(OPTIONS_X, 80)
 
@@ -44,9 +55,11 @@ class SetupScreen(s.Screen):
         # TODO: Selector for number of mr. whites
 
         self.start_button = s.TextLabel(self, "(start)")
+        self.start_button.font = DEFAULT_FONT
 
         self.navigation = Navigation(self)
-        self.navigation.setup_button.font = s.Font("Sans Serif", 12, bold=True)
+        # TODO: copy previous font using future sprout version
+        self.navigation.setup_button.font = s.Font("Sans Serif", 14, bold=True)
         self.navigation.place(910, 50, anchor=s.NE)
 
         self._update_player_widgets()

@@ -5,7 +5,13 @@ from game.game import Game
 
 import sprout as s
 
-from ui.constants import PLAYER_LIMIT, PLAYER_SPACING, PLAYER_X, PLAYER_Y
+from ui.constants import (
+    DEFAULT_FONT,
+    PLAYER_LIMIT,
+    PLAYER_SPACING,
+    PLAYER_X,
+    PLAYER_Y,
+)
 from ui.navigation import Navigation
 
 
@@ -17,8 +23,11 @@ class QuestionsScreen(s.Screen):
         self.question_order: list[str] = []
 
         self.player_labels = [s.TextLabel(self, "") for _ in range(PLAYER_LIMIT)]
+        for label in self.player_labels:
+            label.font = DEFAULT_FONT
 
         self.reroll_button = s.TextLabel(self, "(reroll question order)")
+        self.reroll_button.font = DEFAULT_FONT
         self.reroll_button.on_click = self._reroll_question_order
         self.reroll_button.place(50, 550, anchor=s.SW)
 
@@ -26,7 +35,8 @@ class QuestionsScreen(s.Screen):
         self.notepad.place(760, 50, anchor=s.NE)
 
         self.navigation = Navigation(self)
-        self.navigation.questions_button.font = s.Font("Sans Serif", 12, bold=True)
+        # TODO: copy previous font using future sprout version
+        self.navigation.questions_button.font = s.Font("Sans Serif", 14, bold=True)
         self.navigation.place(910, 50, anchor=s.NE)
 
     def _reroll_question_order(self, source: s.TextLabel):
