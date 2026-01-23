@@ -43,6 +43,7 @@ class SetupScreen(s.Screen):
         self.file_label.place(OPTIONS_X, 50)
         self.file_dropdown = s.Dropdown(self, [file.name for file in FILES])
         # TODO: set dropdown font using future sprout version
+        self.file_dropdown._dropdown.config(font=DEFAULT_FONT.tkinter())
         self.file_dropdown.on_write = self._on_dropdown_write
         self.file_dropdown.place(OPTIONS_X, 80)
 
