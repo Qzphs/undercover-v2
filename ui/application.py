@@ -1,3 +1,5 @@
+import argparse
+
 from game.files import FILES
 from game.game import Game
 
@@ -8,6 +10,11 @@ from ui.questions_screen import QuestionsScreen
 from ui.setup_screen import SetupScreen
 from ui.voting_screen import VotingScreen
 from ui.words_screen import WordsScreen
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--no-save", action="store_true")
+args = vars(parser.parse_args())
 
 
 class Application(s.Application):
@@ -69,6 +76,7 @@ class Application(s.Application):
         self.change_screen(self.voting_screen)
 
     def _save_and_quit(self):
-        for file in FILES:
-            file.save()
+        if not args["no_save"]:
+            for file in FILES:
+                file.save()
         self.tk.quit()
