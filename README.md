@@ -1,5 +1,6 @@
-GUI for playing Undercover. This program replaces Undercover v1 (its
-predecessor) and [monabgames.com](https://monabgames.com/undercover).
+GUI for playing Undercover. This program replaces
+[Undercover v1](https://github.com/Qzphs/undercover-v1) (its predecessor) and
+[monabgames.com](https://monabgames.com/undercover).
 
 You need to create the words yourself and feed it into the program.
 
@@ -22,7 +23,7 @@ separated by a comma (`,`).
 
 The hash symbol is reserved for comments (`#`). The program will use this to
 'remove' (without actually deleting) your words after they are used. You may
-use `#` at the start of a line to add comments if you wish.
+use `#` at the start of a line to add your own comments if you wish.
 
 Blank lines are okay anywhere in the file. You are encouraged to add several
 blank lines at the beginning of the file so that your words don't get spoiled

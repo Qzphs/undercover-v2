@@ -2,7 +2,13 @@ from game.game import Game
 
 import sprout as s
 
-from ui.constants import PLAYER_LIMIT, PLAYER_SPACING, PLAYER_X, PLAYER_Y
+from ui.constants import (
+    DEFAULT_FONT,
+    PLAYER_LIMIT,
+    PLAYER_SPACING,
+    PLAYER_X,
+    PLAYER_Y,
+)
 from ui.navigation import Navigation
 from ui.spoiler import Spoiler
 
@@ -14,10 +20,14 @@ class WordsScreen(s.Screen):
         self.game = game
 
         self.player_labels = [s.TextLabel(self, "") for _ in range(PLAYER_LIMIT)]
+        for label in self.player_labels:
+            label.font = DEFAULT_FONT
+
         self.word_spoilers = [Spoiler(self, "") for _ in range(PLAYER_LIMIT)]
 
         self.navigation = Navigation(self)
-        self.navigation.words_button.font = s.Font("Sans Serif", 12, bold=True)
+        # TODO: copy previous font using future sprout version
+        self.navigation.words_button.font = s.Font("Sans Serif", 14, bold=True)
         self.navigation.place(910, 50, anchor=s.NE)
 
     def update(self):

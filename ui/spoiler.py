@@ -1,5 +1,7 @@
 import sprout as s
 
+from ui.constants import DEFAULT_FONT
+
 
 class Spoiler(s.Frame):
 
@@ -11,6 +13,7 @@ class Spoiler(s.Frame):
         self.on_click = self._toggle_revealed
 
         self._text_label = s.TextLabel(self, "(click to reveal)")
+        self._text_label.font = DEFAULT_FONT
         self._text_label.on_click = self._toggle_revealed
         if centered:
             self._text_label.place(100, 0, anchor=s.N)

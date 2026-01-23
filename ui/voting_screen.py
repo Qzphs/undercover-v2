@@ -2,7 +2,13 @@ from game.game import Game
 
 import sprout as s
 
-from ui.constants import PLAYER_LIMIT, PLAYER_SPACING, PLAYER_X, PLAYER_Y
+from ui.constants import (
+    DEFAULT_FONT,
+    PLAYER_LIMIT,
+    PLAYER_SPACING,
+    PLAYER_X,
+    PLAYER_Y,
+)
 from ui.navigation import Navigation
 from ui.spoiler import Spoiler
 
@@ -17,20 +23,26 @@ class VotingScreen(s.Screen):
         self.game = game
 
         self.player_labels = [s.TextLabel(self, "") for _ in range(PLAYER_LIMIT)]
+        for label in self.player_labels:
+            label.font = DEFAULT_FONT
+
         self.role_spoilers = [Spoiler(self, "") for _ in range(PLAYER_LIMIT)]
 
         self.c_word_label = s.TextLabel(self, "civilian word")
+        self.c_word_label.font = DEFAULT_FONT
         self.c_word_label.place(WORDS_X, 75, anchor=s.N)
         self.c_word_spoiler = Spoiler(self, "", centered=True)
         self.c_word_spoiler.place(WORDS_X, 125, anchor=s.N)
 
         self.u_word_label = s.TextLabel(self, "undercover word")
+        self.u_word_label.font = DEFAULT_FONT
         self.u_word_label.place(WORDS_X, 275, anchor=s.N)
         self.u_word_spoiler = Spoiler(self, "", centered=True)
         self.u_word_spoiler.place(WORDS_X, 325, anchor=s.N)
 
         self.navigation = Navigation(self)
-        self.navigation.voting_button.font = s.Font("Sans Serif", 12, bold=True)
+        # TODO: copy previous font using future sprout version
+        self.navigation.voting_button.font = s.Font("Sans Serif", 14, bold=True)
         self.navigation.place(910, 50, anchor=s.NE)
 
     def update(self):

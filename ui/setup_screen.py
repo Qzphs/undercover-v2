@@ -3,7 +3,13 @@ from game.setup import Setup
 
 import sprout as s
 
-from ui.constants import PLAYER_LIMIT, PLAYER_SPACING, PLAYER_X, PLAYER_Y
+from ui.constants import (
+    DEFAULT_FONT,
+    PLAYER_LIMIT,
+    PLAYER_SPACING,
+    PLAYER_X,
+    PLAYER_Y,
+)
 from ui.navigation import Navigation
 
 
@@ -17,22 +23,28 @@ class SetupScreen(s.Screen):
         self.setup = Setup()
 
         self.player_entries = [s.Entry(self) for _ in range(PLAYER_LIMIT)]
-        for i, entry in enumerate(self.player_entries):
+        for entry in self.player_entries:
+            entry.font = DEFAULT_FONT
             entry.width = 12
-            entry.on_write = self.on_entry_write
+            entry.on_write = self._on_entry_write
 
         self.delete_buttons = [s.TextLabel(self, "(-)") for _ in range(PLAYER_LIMIT)]
-        for i, button in enumerate(self.delete_buttons):
-            button.on_click = self.remove_player
+        for button in self.delete_buttons:
+            button.font = DEFAULT_FONT
+            button.on_click = self._remove_player
 
         self.add_button = s.TextLabel(self, "(add player)")
-        self.add_button.on_click = self.add_player
+        self.add_button.font = DEFAULT_FONT
+        self.add_button.on_click = self._add_player
         self.add_button.place(x=50, y=550, anchor=s.SW)
 
         self.file_label = s.TextLabel(self, "use file:")
+        self.file_label.font = DEFAULT_FONT
         self.file_label.place(OPTIONS_X, 50)
         self.file_dropdown = s.Dropdown(self, [file.name for file in FILES])
-        self.file_dropdown.on_write = self.on_dropdown_write
+        # TODO: set dropdown font using future sprout version
+        self.file_dropdown._dropdown.config(font=DEFAULT_FONT.tkinter())
+        self.file_dropdown.on_write = self._on_dropdown_write
         self.file_dropdown.place(OPTIONS_X, 80)
 
         self.n_words_label = s.TextLabel(self, f"{self.setup.file.n_pairs} set(s) left")
@@ -44,31 +56,33 @@ class SetupScreen(s.Screen):
         # TODO: Selector for number of mr. whites
 
         self.start_button = s.TextLabel(self, "(start)")
+        self.start_button.font = DEFAULT_FONT
 
         self.navigation = Navigation(self)
-        self.navigation.setup_button.font = s.Font("Sans Serif", 12, bold=True)
+        # TODO: copy previous font using future sprout version
+        self.navigation.setup_button.font = s.Font("Sans Serif", 14, bold=True)
         self.navigation.place(910, 50, anchor=s.NE)
 
         self._update_player_widgets()
 
-    def add_player(self, source: s.TextLabel):
+    def _add_player(self, source: s.TextLabel):
         self.setup.players.append("")
         self._update_player_widgets()
         self._update_start_button()
 
-    def remove_player(self, source: s.TextLabel):
+    def _remove_player(self, source: s.TextLabel):
         index = self.delete_buttons.index(source)
         self.setup.players.pop(index)
         self._update_player_widgets()
         self._update_start_button()
 
-    def on_dropdown_write(self, source: s.Dropdown):
+    def _on_dropdown_write(self, source: s.Dropdown):
         file = next(file for file in FILES if file.name == source.value)
         self.setup.file = file
-        self.n_words_label.text = f"{self.setup.file.n_pairs} set(s) left"
+        self.update_n_words_label()
         self._update_start_button()
 
-    def on_entry_write(self, source: s.Entry):
+    def _on_entry_write(self, source: s.Entry):
         index = self.player_entries.index(source)
         if index >= len(self.setup.players):
             return
@@ -103,3 +117,6 @@ class SetupScreen(s.Screen):
             self.start_button.place(OPTIONS_X, 550, anchor=s.SW)
         else:
             self.start_button.place(s.OFFSCREEN, 550)
+
+    def update_n_words_label(self):
+        self.n_words_label.text = f"{self.setup.file.n_pairs} set(s) left"
