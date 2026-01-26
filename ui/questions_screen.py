@@ -1,5 +1,4 @@
 import random
-import tkinter
 
 from game.game import Game
 
@@ -31,12 +30,11 @@ class QuestionsScreen(s.Screen):
         self.reroll_button.on_click = self._reroll_question_order
         self.reroll_button.place(50, 550, anchor=s.SW)
 
-        self.notepad = Notepad(self)
+        self.notepad = s.TextArea(self, 70, 30)
         self.notepad.place(PLAYER_X + 175, PLAYER_Y)
 
         self.navigation = Navigation(self)
-        # TODO: copy previous font using future sprout version
-        self.navigation.questions_button.font = s.Font("Sans Serif", 14, bold=True)
+        self.navigation.questions_button.emphasise()
         self.navigation.place(910, 50, anchor=s.NE)
 
     def _reroll_question_order(self, source: s.TextLabel):
@@ -59,12 +57,3 @@ class QuestionsScreen(s.Screen):
                 x=PLAYER_X,
                 y=PLAYER_Y + i * PLAYER_SPACING,
             )
-
-
-class Notepad(s.Frame):
-
-    def __init__(self, parent):
-        super().__init__(parent, 500, 500)
-
-        self._text = tkinter.Text(self.base, width=70, height=30)
-        self._text.place(x=0, y=0)

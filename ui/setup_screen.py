@@ -42,8 +42,7 @@ class SetupScreen(s.Screen):
         self.file_label.font = DEFAULT_FONT
         self.file_label.place(OPTIONS_X, 50)
         self.file_dropdown = s.Dropdown(self, [file.name for file in FILES])
-        # TODO: set dropdown font using future sprout version
-        self.file_dropdown._dropdown.config(font=DEFAULT_FONT.tkinter())
+        self.file_dropdown.font = DEFAULT_FONT
         self.file_dropdown.on_write = self._on_dropdown_write
         self.file_dropdown.place(OPTIONS_X, 80)
 
@@ -59,8 +58,7 @@ class SetupScreen(s.Screen):
         self.start_button.font = DEFAULT_FONT
 
         self.navigation = Navigation(self)
-        # TODO: copy previous font using future sprout version
-        self.navigation.setup_button.font = s.Font("Sans Serif", 14, bold=True)
+        self.navigation.setup_button.emphasise()
         self.navigation.place(910, 50, anchor=s.NE)
 
         self._update_player_widgets()

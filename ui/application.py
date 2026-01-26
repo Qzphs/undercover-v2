@@ -36,10 +36,7 @@ class Application(s.Application):
         self.voting_screen = VotingScreen(self, self.game)
         self._init_navigation_commands(self.voting_screen.navigation)
 
-        self.tk.createcommand("tk::mac::Quit", self._save_and_quit)
-        self.tk.protocol("WM_DELETE_WINDOW", self._save_and_quit)
-
-        self.change_screen(self.setup_screen)
+        self.screen = self.setup_screen
 
     def _init_navigation_commands(self, navigation: Navigation):
         navigation.setup_button.on_click = self._go_to_setup
@@ -52,31 +49,31 @@ class Application(s.Application):
         self.words_screen.update()
         self.questions_screen.update()
         self.voting_screen.update()
-        self.change_screen(self.words_screen)
+        self.screen = self.words_screen
 
     def _go_to_setup(self, source: s.TextLabel):
         if not self.game.players:
             return
         self.setup_screen.update_n_words_label()
-        self.change_screen(self.setup_screen)
+        self.screen = self.setup_screen
 
     def _go_to_words(self, source: s.TextLabel):
         if not self.game.players:
             return
-        self.change_screen(self.words_screen)
+        self.screen = self.words_screen
 
     def _go_to_questions(self, source: s.TextLabel):
         if not self.game.players:
             return
-        self.change_screen(self.questions_screen)
+        self.screen = self.questions_screen
 
     def _go_to_voting(self, source: s.TextLabel):
         if not self.game.players:
             return
-        self.change_screen(self.voting_screen)
+        self.screen = self.voting_screen
 
-    def _save_and_quit(self):
-        if not args["no_save"]:
-            for file in FILES:
-                file.save()
-        self.tk.quit()
+    def on_quit(self):
+        if args["no_save"]:
+            return
+        for file in FILES:
+            file.save()

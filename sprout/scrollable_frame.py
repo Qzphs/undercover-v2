@@ -22,13 +22,13 @@ class ScrollableFrame(Container):
         super().__init__(parent)
 
         self._scrollbar = tkinter.Scrollbar(
-            self.base,
+            self._base,
             orient=tkinter.VERTICAL,
         )
         self._scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 
         self._canvas = tkinter.Canvas(
-            self.base,
+            self._base,
             bd=0,
             highlightthickness=0,
             width=outer_width,
@@ -39,17 +39,17 @@ class ScrollableFrame(Container):
         self._canvas.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
         self._scrollbar.config(command=self._canvas.yview)
 
-        self.frame = tkinter.Frame(
+        self._contents = tkinter.Frame(
             self._canvas,
             width=inner_width,
             height=inner_height,
         )
-        self.frame.pack(fill=tkinter.BOTH)
+        self._contents.pack(fill=tkinter.BOTH)
         self._canvas.create_window(
             0,
             0,
             anchor=NW,
             width=inner_width,
             height=inner_height,
-            window=self.frame,
+            window=self._contents,
         )

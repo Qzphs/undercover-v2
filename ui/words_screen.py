@@ -10,7 +10,10 @@ from ui.constants import (
     PLAYER_Y,
 )
 from ui.navigation import Navigation
-from ui.spoiler import Spoiler
+
+
+SPOILER_WIDTH = 200
+SPOILER_HEIGHT = 25
 
 
 class WordsScreen(s.Screen):
@@ -23,11 +26,15 @@ class WordsScreen(s.Screen):
         for label in self.player_labels:
             label.font = DEFAULT_FONT
 
-        self.word_spoilers = [Spoiler(self, "") for _ in range(PLAYER_LIMIT)]
+        self.word_spoilers = [
+            s.Spoiler(self, "", SPOILER_WIDTH, SPOILER_HEIGHT)
+            for _ in range(PLAYER_LIMIT)
+        ]
+        for spoiler in self.word_spoilers:
+            spoiler.font = DEFAULT_FONT
 
         self.navigation = Navigation(self)
-        # TODO: copy previous font using future sprout version
-        self.navigation.words_button.font = s.Font("Sans Serif", 14, bold=True)
+        self.navigation.words_button.emphasise()
         self.navigation.place(910, 50, anchor=s.NE)
 
     def update(self):
@@ -50,7 +57,7 @@ class WordsScreen(s.Screen):
                 y=PLAYER_Y + i * PLAYER_SPACING,
             )
             spoiler.revealed = False
-            spoiler.text = self.game.words[i]
+            spoiler.back_text = self.game.words[i]
             spoiler.place(
                 x=PLAYER_X + 150,
                 y=PLAYER_Y + i * PLAYER_SPACING,

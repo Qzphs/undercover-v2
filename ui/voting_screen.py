@@ -10,10 +10,11 @@ from ui.constants import (
     PLAYER_Y,
 )
 from ui.navigation import Navigation
-from ui.spoiler import Spoiler
 
 
 WORDS_X = 580
+SPOILER_WIDTH = 200
+SPOILER_HEIGHT = 25
 
 
 class VotingScreen(s.Screen):
@@ -26,23 +27,29 @@ class VotingScreen(s.Screen):
         for label in self.player_labels:
             label.font = DEFAULT_FONT
 
-        self.role_spoilers = [Spoiler(self, "") for _ in range(PLAYER_LIMIT)]
+        self.role_spoilers = [
+            s.Spoiler(self, "", SPOILER_WIDTH, SPOILER_HEIGHT)
+            for _ in range(PLAYER_LIMIT)
+        ]
+        for spoiler in self.role_spoilers:
+            spoiler.font = DEFAULT_FONT
 
         self.c_word_label = s.TextLabel(self, "civilian word")
         self.c_word_label.font = DEFAULT_FONT
         self.c_word_label.place(WORDS_X, 75, anchor=s.N)
-        self.c_word_spoiler = Spoiler(self, "", centered=True)
+        self.c_word_spoiler = s.Spoiler(self, "", SPOILER_WIDTH, SPOILER_HEIGHT)
+        self.c_word_spoiler.font = DEFAULT_FONT
         self.c_word_spoiler.place(WORDS_X, 125, anchor=s.N)
 
         self.u_word_label = s.TextLabel(self, "undercover word")
         self.u_word_label.font = DEFAULT_FONT
         self.u_word_label.place(WORDS_X, 275, anchor=s.N)
-        self.u_word_spoiler = Spoiler(self, "", centered=True)
+        self.u_word_spoiler = s.Spoiler(self, "", SPOILER_WIDTH, SPOILER_HEIGHT)
+        self.u_word_spoiler.font = DEFAULT_FONT
         self.u_word_spoiler.place(WORDS_X, 325, anchor=s.N)
 
         self.navigation = Navigation(self)
-        # TODO: copy previous font using future sprout version
-        self.navigation.voting_button.font = s.Font("Sans Serif", 14, bold=True)
+        self.navigation.voting_button.emphasise()
         self.navigation.place(910, 50, anchor=s.NE)
 
     def update(self):
@@ -65,10 +72,10 @@ class VotingScreen(s.Screen):
                 y=PLAYER_Y + i * PLAYER_SPACING,
             )
             spoiler.revealed = False
-            spoiler.text = self.game.roles[i].value
+            spoiler.back_text = self.game.roles[i].value
             spoiler.place(
                 x=PLAYER_X + 150,
                 y=PLAYER_Y + i * PLAYER_SPACING,
             )
-        self.c_word_spoiler.text = self.game.c_word
-        self.u_word_spoiler.text = self.game.u_word
+        self.c_word_spoiler.back_text = self.game.c_word
+        self.u_word_spoiler.back_text = self.game.u_word

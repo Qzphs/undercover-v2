@@ -1,4 +1,5 @@
 import tkinter
+import tkinter.font
 from typing import Callable
 
 from sprout.font import Font
@@ -10,10 +11,11 @@ class Entry(Widget):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self._variable = tkinter.StringVar(self.base)
+        self._variable = tkinter.StringVar(self._base)
         self._variable.trace_add("write", self._on_write)
-        self._entry = tkinter.Entry(self.base, textvariable=self._variable)
+        self._entry = tkinter.Entry(self._base, textvariable=self._variable)
         self._entry.pack()
+        self.font = Font.default()
         self.on_write: Callable[[Widget], None] | None = None
 
     def _on_write(self, *args):
@@ -23,15 +25,21 @@ class Entry(Widget):
 
     @property
     def font(self):
-        # TODO: return a sprout.Font instead of str
-        return self._entry.cget("font")
+        """
+        Similar to tkinter's font.
+
+        This property is a sprout.Font object, not a tkinter font name.
+        """
+        return self._font
 
     @font.setter
     def font(self, font: Font):
-        self._entry.config(font=font.tkinter())
+        self._font = font
+        self._entry.config(font=font._tkinter())
 
     @property
     def value(self):
+        """Same as tkinter's value."""
         return self._entry.get()
 
     @value.setter
@@ -40,6 +48,7 @@ class Entry(Widget):
 
     @property
     def width(self):
+        """Same as tkinter's width."""
         return self._entry.cget("width")
 
     @width.setter
