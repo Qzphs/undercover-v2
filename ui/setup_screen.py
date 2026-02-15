@@ -53,13 +53,13 @@ class SetupScreen(s.Screen):
         self.n_words_label.place(OPTIONS_X, 110)
 
         self.undercover_selector = NumberSelector(self, "undercovers:")
-        self.undercover_selector.value = self.setup.n_undercovers
+        self.undercover_selector.value = self.setup.undercovers
         self.undercover_selector.on_decrease = self._decrease_undercovers
         self.undercover_selector.on_increase = self._increase_undercovers
         self.undercover_selector.place(OPTIONS_X, 200)
 
         self.mr_white_selector = NumberSelector(self, "mr. whites:")
-        self.mr_white_selector.value = self.setup.n_mr_whites
+        self.mr_white_selector.value = self.setup.mr_whites
         self.mr_white_selector.on_decrease = self._decrease_mr_whites
         self.mr_white_selector.on_increase = self._increase_mr_whites
         self.mr_white_selector.place(OPTIONS_X, 300)
@@ -85,27 +85,27 @@ class SetupScreen(s.Screen):
         self._update_start_button()
 
     def _decrease_undercovers(self, source: s.Widget):
-        if self.setup.n_undercovers <= 0:
+        if self.setup.undercovers <= 0:
             return
-        self.setup.n_undercovers -= 1
-        self.undercover_selector.value = str(self.setup.n_undercovers)
+        self.setup.undercovers -= 1
+        self.undercover_selector.value = str(self.setup.undercovers)
         self._update_start_button()
 
     def _increase_undercovers(self, source: s.Widget):
-        self.setup.n_undercovers += 1
-        self.undercover_selector.value = str(self.setup.n_undercovers)
+        self.setup.undercovers += 1
+        self.undercover_selector.value = str(self.setup.undercovers)
         self._update_start_button()
 
     def _decrease_mr_whites(self, source: s.Widget):
-        if self.setup.n_mr_whites <= 0:
+        if self.setup.mr_whites <= 0:
             return
-        self.setup.n_mr_whites -= 1
-        self.mr_white_selector.value = str(self.setup.n_mr_whites)
+        self.setup.mr_whites -= 1
+        self.mr_white_selector.value = str(self.setup.mr_whites)
         self._update_start_button()
 
     def _increase_mr_whites(self, source: s.Widget):
-        self.setup.n_mr_whites += 1
-        self.mr_white_selector.value = str(self.setup.n_mr_whites)
+        self.setup.mr_whites += 1
+        self.mr_white_selector.value = str(self.setup.mr_whites)
         self._update_start_button()
 
     def _on_dropdown_write(self, source: s.Dropdown):
