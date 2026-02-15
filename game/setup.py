@@ -1,3 +1,5 @@
+import random
+
 from game.files import FILES
 from game.role import Role
 
@@ -28,4 +30,5 @@ class Setup:
             roles.append(Role.MR_WHITE)
         while len(roles) < len(self.players):
             roles.append(Role.CIVILIAN)
+        random.shuffle(roles)
         return roles
