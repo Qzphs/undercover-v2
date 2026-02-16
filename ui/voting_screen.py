@@ -78,4 +78,6 @@ class VotingScreen(s.Screen):
                 y=PLAYER_Y + i * PLAYER_SPACING,
             )
         self.c_word_spoiler.back_text = self.game.c_word
+        self.c_word_spoiler.revealed = False
         self.u_word_spoiler.back_text = self.game.u_word
+        self.u_word_spoiler.revealed = False
