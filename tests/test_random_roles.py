@@ -12,8 +12,8 @@ def setup():
 
 
 def test_random_roles_one_undercover(setup: Setup):
-    setup.n_undercovers = 1
-    setup.n_mr_whites = 0
+    setup.undercovers = 1
+    setup.mr_whites = 0
     roles = setup.random_roles()
     assert len(roles) == 4
     assert roles.count(Role.CIVILIAN) == 3
@@ -21,8 +21,8 @@ def test_random_roles_one_undercover(setup: Setup):
 
 
 def test_random_roles_one_mr_white(setup: Setup):
-    setup.n_undercovers = 0
-    setup.n_mr_whites = 1
+    setup.undercovers = 0
+    setup.mr_whites = 1
     roles = setup.random_roles()
     assert len(roles) == 4
     assert roles.count(Role.CIVILIAN) == 3
@@ -30,8 +30,8 @@ def test_random_roles_one_mr_white(setup: Setup):
 
 
 def test_random_roles_one_of_each(setup: Setup):
-    setup.n_undercovers = 1
-    setup.n_mr_whites = 1
+    setup.undercovers = 1
+    setup.mr_whites = 1
     roles = setup.random_roles()
     assert len(roles) == 4
     assert roles.count(Role.CIVILIAN) == 2
@@ -40,8 +40,8 @@ def test_random_roles_one_of_each(setup: Setup):
 
 
 def test_random_roles_two_undercover(setup: Setup):
-    setup.n_undercovers = 2
-    setup.n_mr_whites = 0
+    setup.undercovers = 2
+    setup.mr_whites = 0
     roles = setup.random_roles()
     assert len(roles) == 4
     assert roles.count(Role.CIVILIAN) == 2
@@ -49,8 +49,8 @@ def test_random_roles_two_undercover(setup: Setup):
 
 
 def test_random_roles_two_mr_white(setup: Setup):
-    setup.n_undercovers = 0
-    setup.n_mr_whites = 2
+    setup.undercovers = 0
+    setup.mr_whites = 2
     roles = setup.random_roles()
     assert len(roles) == 4
     assert roles.count(Role.CIVILIAN) == 2
